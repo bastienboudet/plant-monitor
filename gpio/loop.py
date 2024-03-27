@@ -36,6 +36,7 @@ class GPIOThread(Thread):
             if current_time - self.last_read_time >= self.read_interval:
                 self.last_read_time = current_time
                 self.humidity = self.humidity_sensor.read()
+                self.logger.info(f"Read humidity: {self.humidity}")
 
             time.sleep(self.timeout)
     
