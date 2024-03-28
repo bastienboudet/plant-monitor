@@ -11,18 +11,16 @@ class GPIOThread(Thread):
     # TODO: Add muliple sensor support and refactor
     def __init__(self, humidity_sensor: Sensor, read_interval: int, timeout: int):
         Thread.__init__(self)
-        self.logger = getLogger(TAG)
-        self.logger.setLevel(INFO)
         self.humidity_sensor = humidity_sensor
         self.read_interval = read_interval
         self.last_read_time = 0
         self.timeout = timeout
         self.humidity = None
-        self.logger.info("GPIO thread initialized")
 
     def run(self):
         # initialize sensor
         self.humidity_sensor.setup()
+        print("Humidity sensor initialized", flush=True)
 
         while True:
 
@@ -38,7 +36,7 @@ class GPIOThread(Thread):
             if current_time - self.last_read_time >= self.read_interval:
                 self.last_read_time = current_time
                 self.humidity = self.humidity_sensor.read()
-                self.logger.info(f"Read humidity: {self.humidity}")
+                print("Humidity: ", self.humidity, flush=True)
 
             time.sleep(self.timeout)
     
