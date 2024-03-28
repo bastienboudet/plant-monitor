@@ -1,5 +1,5 @@
 from threading import Thread
-from logging import getLogger
+from logging import getLogger, INFO
 import time
 from queue import Empty
 
@@ -12,11 +12,13 @@ class GPIOThread(Thread):
     def __init__(self, humidity_sensor: Sensor, read_interval: int, timeout: int):
         Thread.__init__(self)
         self.logger = getLogger(TAG)
+        self.logger.setLevel(INFO)
         self.humidity_sensor = humidity_sensor
         self.read_interval = read_interval
         self.last_read_time = 0
         self.timeout = timeout
         self.humidity = None
+        self.logger.info("GPIO thread initialized")
 
     def run(self):
         # initialize sensor
