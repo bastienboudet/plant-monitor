@@ -30,22 +30,16 @@ class GPIOThread(Thread):
 
             # check for commands
             try:
-                command, args = rx_queue.get(block=False)
+                command, args = rx_queue.get(block=True)
                 self.execute_command(command, args)
             except Empty:
                 pass
 
-            # read sensor
-            current_time = time.time()
-            if current_time - self.last_read_time >= self.read_interval:
-                self.last_read_time = current_time
-                self.humidity = self.humidity_sensor.read()
-                print("Humidity: ", self.humidity, flush=True)
-
-            time.sleep(self.timeout)
+            # time.sleep(self.timeout)
     
     def execute_command(self, command: GPIOCommands, args=None):
         if command == GPIOCommands.READ_HUMIDITY:
+            self.humidity = self.humidity_sensor.read()
             tx_queue.put(self.humidity)
         elif command == GPIOCommands.SET_PUMP:
             self.pump_actuator.set_state(args)
