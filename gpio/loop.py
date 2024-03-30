@@ -3,15 +3,17 @@ from logging import getLogger, INFO
 import time
 from queue import Empty
 
-from .sensor import Sensor
+from .sensor import DigitalSensor
+from .actuator import Actuator
 from .definition import TAG, GPIOCommands
 from .queues import rx_queue, tx_queue
 
 class GPIOThread(Thread):
     # TODO: Add muliple sensor support and refactor
-    def __init__(self, humidity_sensor: Sensor, read_interval: int, timeout: int):
+    def __init__(self, humidity_sensor: DigitalSensor, pump_actuator: Actuator, read_interval: int, timeout: int):
         Thread.__init__(self)
         self.humidity_sensor = humidity_sensor
+        self.pump_actuator = pump_actuator
         self.read_interval = read_interval
         self.last_read_time = 0
         self.timeout = timeout
@@ -43,5 +45,7 @@ class GPIOThread(Thread):
     def execute_command(self, command: GPIOCommands, args=None):
         if command == GPIOCommands.READ_HUMIDITY:
             tx_queue.put(self.humidity)
+        elif command == GPIOCommands.SET_PUMP:
+            self.pump_actuator.set_state(args)
         else:
-            self.logger.error("Invalid command")
+            print("Unknown command", flush=True)

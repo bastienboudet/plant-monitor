@@ -8,3 +8,5 @@ class GPIOInterface:
         rx_queue.put((GPIOCommands.READ_HUMIDITY, None))
         return tx_queue.get()
     
+    def set_pump(state: bool):
+        rx_queue.put((GPIOCommands.SET_PUMP, state))

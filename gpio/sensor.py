@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 
-class Sensor:
+class DigitalSensor:
 
     def __init__(self, pin_number, bias, scale):
         self.pin_number = pin_number
