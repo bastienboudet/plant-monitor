@@ -18,7 +18,7 @@ if __name__ == "__main__":
     gpio_logger = getLogger(TAG_GPIO)
     gpio_logger.setLevel(INFO)
 
-    humidity_sensor = DigitalSensor(4, 0, 1)
+    humidity_sensor = DigitalSensor(4)
     pump_actuator = Actuator(17)
 
     gpio_thread = GPIOThread(humidity_sensor, pump_actuator, 0.5, 0.1)
@@ -27,6 +27,7 @@ if __name__ == "__main__":
 
     for i in range(12):
         time.sleep(1)
+        print(GPIOInterface.get_humidity(), flush=True)
         GPIOInterface.set_pump(i%2 == 0)
 
     GPIOInterface.set_pump(False)
