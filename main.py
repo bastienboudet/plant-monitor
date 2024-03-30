@@ -44,6 +44,7 @@ if __name__ == "__main__":
             # monitoring
             print(GPIOInterface.get_humidity(), flush=True)
     except KeyboardInterrupt:
+        GPIOInterface.set_pump(False)
         sys.exit()
 
     # start qt app
