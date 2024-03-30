@@ -22,7 +22,9 @@ class GPIOThread(Thread):
     def run(self):
         # initialize sensor
         self.humidity_sensor.setup()
-        print("Humidity sensor initialized", flush=True)
+
+        # initialize actuator
+        self.pump_actuator.setup()
 
         while True:
 
