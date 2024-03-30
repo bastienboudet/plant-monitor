@@ -9,6 +9,7 @@ from gpio.sensor import DigitalSensor
 from gpio.actuator import Actuator
 from gpio.definition import TAG as TAG_GPIO
 from gpio.interface import GPIOInterface
+import RPi.GPIO as GPIO
 
 # statemachine
 from plant_statemachine.loop import StatemachineThread
@@ -45,6 +46,9 @@ if __name__ == "__main__":
             print(GPIOInterface.get_humidity(), flush=True)
     except KeyboardInterrupt:
         GPIOInterface.set_pump(False)
+        GPIO.cleanup()
+
+    finally:
         sys.exit()
 
     # start qt app

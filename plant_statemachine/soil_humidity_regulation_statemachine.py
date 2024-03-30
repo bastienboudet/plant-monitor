@@ -29,8 +29,8 @@ class SoilHumidityRegulationStateMachine(StateMachine):
 
     def __init__(self):
         self.waiting_time = datetime.now()
-        self.watering_time = timedelta(seconds=3)
-        self.cooldown_time = timedelta(seconds=120)
+        self.watering_time = timedelta(seconds=1)
+        self.cooldown_time = timedelta(seconds=60)
         super().__init__()
 
     # conditions
@@ -44,13 +44,15 @@ class SoilHumidityRegulationStateMachine(StateMachine):
         return datetime.now() - self.waiting_time > self.watering_time
     
     def is_feedback_received(self):
-        return datetime.now() - self.waiting_time > self.watering_time
+        return datetime.now() - self.waiting_time > self.cooldown_time
     
     # actions
     def on_enter_watering(self):
         GPIOInterface.set_pump(True)
         self.waiting_time = datetime.now()
+        print("Entering watering state", flush=True)
     
     def on_enter_awaiting_feedback(self):
         GPIOInterface.set_pump(False)
         self.waiting_time = datetime.now()
+        print("Entering awaiting feedback state", flush=True)
