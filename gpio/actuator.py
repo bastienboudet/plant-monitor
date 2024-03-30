@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 
 class Actuator:
 
-    def __init_(self, pin_number:int):
+    def __init__(self, pin_number:int):
         self.pin_number = pin_number
 
     def setup(self):
