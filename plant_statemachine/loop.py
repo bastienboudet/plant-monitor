@@ -7,6 +7,7 @@ class StatemachineThread(Thread):
 
     def __init__(self, timeout=1):
         Thread.__init__(self)
+        self.timeout = timeout
         self.soil_humidity_regulation_statemachine = SoilHumidityRegulationStateMachine()
     
     def run(self):

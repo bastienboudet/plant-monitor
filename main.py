@@ -28,7 +28,7 @@ if __name__ == "__main__":
     gpio_thread.daemon = True
     gpio_thread.start()
 
-    statemachine_thread = StatemachineThread()
+    statemachine_thread = StatemachineThread(timeout=1)
     statemachine_thread.daemon = True
     statemachine_thread.start()
 

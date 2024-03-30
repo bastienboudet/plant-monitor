@@ -10,13 +10,10 @@ from .queues import rx_queue, tx_queue
 
 class GPIOThread(Thread):
     # TODO: Add muliple sensor support and refactor
-    def __init__(self, humidity_sensor: DigitalSensor, pump_actuator: Actuator, read_interval: int, timeout: int):
+    def __init__(self, humidity_sensor: DigitalSensor, pump_actuator: Actuator):
         Thread.__init__(self)
         self.humidity_sensor = humidity_sensor
         self.pump_actuator = pump_actuator
-        self.read_interval = read_interval
-        self.last_read_time = 0
-        self.timeout = timeout
         self.humidity = None
 
     def run(self):
