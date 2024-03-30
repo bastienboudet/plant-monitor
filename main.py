@@ -44,7 +44,7 @@ if __name__ == "__main__":
             time.sleep(2)
             # monitoring
             print(GPIOInterface.get_humidity(), flush=True)
-    except KeyboardInterrupt:
+    except:
         GPIOInterface.set_pump(False)
         GPIO.cleanup()
 
