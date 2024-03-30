@@ -10,6 +10,9 @@ from gpio.actuator import Actuator
 from gpio.definition import TAG as TAG_GPIO
 from gpio.interface import GPIOInterface
 
+# statemachine
+from plant_statemachine.loop import StatemachineThread
+
 # qt
 from qt.link_main_window import MainWindow
 
@@ -25,13 +28,23 @@ if __name__ == "__main__":
     gpio_thread.daemon = True
     gpio_thread.start()
 
-    for i in range(12):
-        time.sleep(1)
-        print(GPIOInterface.get_humidity(), flush=True)
-        GPIOInterface.set_pump(i%2 == 0)
+    statemachine_thread = StatemachineThread()
+    statemachine_thread.daemon = True
+    statemachine_thread.start()
 
-    GPIOInterface.set_pump(False)
-    time.sleep(1000)
+    # for i in range(12):
+    #     time.sleep(1)
+    #     print(GPIOInterface.get_humidity(), flush=True)
+    #     GPIOInterface.set_pump(i%2 == 0)
+
+    # await ctrl-c
+    try:
+        while True:
+            time.sleep(2)
+            # monitoring
+            print(GPIOInterface.get_humidity(), flush=True)
+    except KeyboardInterrupt:
+        sys.exit()
 
     # start qt app
     # app = QApplication(sys.argv)
