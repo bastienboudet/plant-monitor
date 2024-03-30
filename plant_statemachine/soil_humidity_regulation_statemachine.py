@@ -38,7 +38,7 @@ class SoilHumidityRegulationStateMachine(StateMachine):
         return False
     
     def is_humidity_low(self):
-        return GPIOInterface.get_humidity() == 0
+        return GPIOInterface.get_humidity() == 1
 
     def is_watering_done(self):
         return datetime.now() - self.waiting_time > self.watering_time
