@@ -24,7 +24,7 @@ if __name__ == "__main__":
     humidity_sensor = DigitalSensor(4)
     pump_actuator = Actuator(17)
 
-    gpio_thread = GPIOThread(humidity_sensor, pump_actuator, 0.5, 0.1)
+    gpio_thread = GPIOThread(humidity_sensor, pump_actuator)
     gpio_thread.daemon = True
     gpio_thread.start()
 
