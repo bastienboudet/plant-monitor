@@ -13,4 +13,3 @@ class DigitalSensor:
     
     def read(self):
         return GPIO.input(self.pin_number)
-    
