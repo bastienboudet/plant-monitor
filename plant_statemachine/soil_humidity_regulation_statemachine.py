@@ -30,7 +30,8 @@ class SoilHumidityRegulationStateMachine(StateMachine):
     def __init__(self):
         self.waiting_time = datetime.now()
         self.watering_time = timedelta(seconds=1)
-        self.cooldown_time = timedelta(seconds=60)
+        self.cooldown_time = timedelta(seconds=1500)
+        self.humidity_low_threshold = 0.5
         super().__init__()
 
     # conditions
@@ -38,7 +39,7 @@ class SoilHumidityRegulationStateMachine(StateMachine):
         return False
     
     def is_humidity_low(self):
-        return GPIOInterface.get_humidity() == 1
+        return GPIOInterface.get_humidity() < self.humidity_low_threshold
 
     def is_watering_done(self):
         return datetime.now() - self.waiting_time > self.watering_time

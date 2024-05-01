@@ -5,11 +5,15 @@ from PySide6.QtWidgets import QApplication
 
 # GPIO
 from gpio.loop import GPIOThread
-from gpio.sensor import DigitalSensor
+from gpio.sensor import AnalogSensor
 from gpio.actuator import Actuator
 from gpio.definition import TAG as TAG_GPIO
 from gpio.interface import GPIOInterface
 import RPi.GPIO as GPIO
+
+import adafruit_ads1x15.ads1015 as ADS
+import board
+import busio
 
 # statemachine
 from plant_statemachine.loop import StatemachineThread
@@ -22,7 +26,15 @@ if __name__ == "__main__":
     gpio_logger = getLogger(TAG_GPIO)
     gpio_logger.setLevel(INFO)
 
-    humidity_sensor = DigitalSensor(4)
+    # Create the I2C bus
+    i2c = busio.I2C(board.SCL, board.SDA)
+
+    # Create the ADC object using the I2C bus
+    ads = ADS.ADS1015(i2c)
+
+    humidity_sensor = AnalogSensor(adc=ads, 
+                                   channel=ADS.P0,
+                                   slope=-1/2.2, intercept=3.3/2.2)
     pump_actuator = Actuator(17)
 
     gpio_thread = GPIOThread(humidity_sensor, pump_actuator)
