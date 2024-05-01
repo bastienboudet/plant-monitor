@@ -44,18 +44,13 @@ if __name__ == "__main__":
     statemachine_thread = StatemachineThread(timeout=1)
     statemachine_thread.daemon = True
     statemachine_thread.start()
-
-    # for i in range(12):
-    #     time.sleep(1)
-    #     print(GPIOInterface.get_humidity(), flush=True)
-    #     GPIOInterface.set_pump(i%2 == 0)
-
+    
     # await ctrl-c
     try:
         while True:
             time.sleep(2)
             # monitoring
-            print(GPIOInterface.get_humidity(), flush=True)
+            print(f"humidity: {GPIOInterface.get_humidity()}", flush=True)
     except:
         GPIOInterface.set_pump(False)
         GPIO.cleanup()

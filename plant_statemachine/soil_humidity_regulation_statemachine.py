@@ -45,6 +45,8 @@ class SoilHumidityRegulationStateMachine(StateMachine):
         return datetime.now() - self.waiting_time > self.watering_time
     
     def is_feedback_received(self):
+        # print remaining time
+        print("Remaining time before humidity check: ", (self.cooldown_time - (datetime.now() - self.waiting_time)).seconds, "s", flush=True)
         return datetime.now() - self.waiting_time > self.cooldown_time
     
     # actions
