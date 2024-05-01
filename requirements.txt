@@ -1,5 +1,17 @@
+Adafruit-Blinka==8.39.1
+adafruit-circuitpython-ads1x15==2.2.25
+adafruit-circuitpython-busdevice==5.2.6
+adafruit-circuitpython-connectionmanager==1.0.1
+adafruit-circuitpython-requests==3.2.5
+adafruit-circuitpython-typing==1.10.3
+Adafruit-PlatformDetect==3.62.0
+Adafruit-PureIO==1.1.11
+pyftdi==0.55.4
+pyserial==3.5
 PySide6==6.6.2
 PySide6_Addons==6.6.2
 PySide6_Essentials==6.6.2
+python-statemachine==2.1.2
+pyusb==1.2.1
 shiboken6==6.6.2
 RPi.GPIO==0.7.1
