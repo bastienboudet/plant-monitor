@@ -35,7 +35,7 @@ if __name__ == "__main__":
     humidity_sensor = AnalogSensor(adc=ads, 
                                    channel=ADS.P0,
                                    slope=-1/2.2, intercept=3.3/2.2)
-    pump_actuator = Actuator(17)
+    pump_actuator = Actuator(4)
 
     gpio_thread = GPIOThread(humidity_sensor, pump_actuator)
     gpio_thread.daemon = True
@@ -44,7 +44,7 @@ if __name__ == "__main__":
     statemachine_thread = StatemachineThread(timeout=1)
     statemachine_thread.daemon = True
     statemachine_thread.start()
-    
+
     # await ctrl-c
     try:
         while True:
